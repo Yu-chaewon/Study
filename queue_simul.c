@@ -65,6 +65,7 @@ int main(void) {
 			printf("vip 고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
 		}
 		//여기까지 뜯어고쳐야될듯 뭔가 확률이 이상한것같애
+		//
 
 		if (service_time > 0) {
 			printf("고객 %d 업무처리중입니다.\n", service_customer);
