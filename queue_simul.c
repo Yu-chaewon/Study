@@ -42,38 +42,28 @@ int main(void) {
 
 	for (int clock = 0; clock < minutes; clock++) {
 		printf("현재시각 = %d\n", clock);
-
+		int randomNum = rand() % 10;
 		//여기서부터
-		if ((rand() % 10) < 3) { //일반 고객 발생 확률 20%
+		if (randomNum < 2) { //일반 고객 발생 확률 20%
 			element customer;
 			customer.id = total_customers++;
-			
+			comm_customers++; //일반 고객 방문 수 카운트
 			customer.arrival_time = clock;
 			customer.service_time = (rand() % 3) + 1;
-			if ((rand() % 10) < 1) {
-				vip_customers++; //VIP 고객 방문 수 카운트
-				customer.isVip = 1;
-			}
-			else {
-				comm_customers++; //일반 고객 방문 수 카운트
-				customer.isVip = 0; //VIP가 아님을 표시
-			}
+			customer.isVip = 0; //VIP가 아님을 표시
 			enqueue(&queue, customer);
 			printf("고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
 		}
-		/*
-		if ((rand() % 10) < 1) { //vip 고객 발생 확률 10%
+		else if (randomNum < 3) { //vip 고객 발생 확률 10%
 			element customer;
 			customer.id = total_customers++;
-			
+			vip_customers++; //VIP 고객 방문 수 카운트
 			customer.arrival_time = clock;
 			customer.service_time = (rand() % 3) + 1;
 			customer.isVip = 1; //VIP임을 표시
 			enqueue(&queue, customer);
 			printf("vip 고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
-		}*/
-		//여기까지 뜯어고쳐야될듯 뭔가 확률이 이상한것같애
-		//
+		}
 
 		if (service_time > 0) {
 			printf("고객 %d 업무처리중입니다.\n", service_customer);
@@ -85,7 +75,7 @@ int main(void) {
 				service_customer = customer.id;
 				service_time = customer.service_time;
 				printf("고객 %d이 %d분에 업무 시작, 대기시간은 %d분.\n", customer.id, clock, clock - customer.arrival_time);
-				waitTime =  clock - customer.arrival_time; //업무처리를 시작한 고객의 대기 시간
+				waitTime = clock - customer.arrival_time; //업무처리를 시작한 고객의 대기 시간
 				total_wait += waitTime; //전체 대기 시간은 조건문을 타지 않음
 				if (!(customer.isVip))
 					comm_wait += waitTime; //VIP가 아니면 일반 고객 대기시간에 합산
