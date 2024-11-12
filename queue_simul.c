@@ -44,26 +44,34 @@ int main(void) {
 		printf("현재시각 = %d\n", clock);
 
 		//여기서부터
-		if ((rand() % 10) < 2) { //일반 고객 발생 확률 20%
+		if ((rand() % 10) < 3) { //일반 고객 발생 확률 20%
 			element customer;
 			customer.id = total_customers++;
-			comm_customers++; //일반 고객 방문 수 카운트
+			
 			customer.arrival_time = clock;
 			customer.service_time = (rand() % 3) + 1;
-			customer.isVip = 0; //VIP가 아님을 표시
+			if ((rand() % 10) < 1) {
+				vip_customers++; //VIP 고객 방문 수 카운트
+				customer.isVip = 1;
+			}
+			else {
+				comm_customers++; //일반 고객 방문 수 카운트
+				customer.isVip = 0; //VIP가 아님을 표시
+			}
 			enqueue(&queue, customer);
-			printf("일반 고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
+			printf("고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
 		}
+		/*
 		if ((rand() % 10) < 1) { //vip 고객 발생 확률 10%
 			element customer;
 			customer.id = total_customers++;
-			vip_customers++; //VIP 고객 방문 수 카운트
+			
 			customer.arrival_time = clock;
 			customer.service_time = (rand() % 3) + 1;
 			customer.isVip = 1; //VIP임을 표시
 			enqueue(&queue, customer);
 			printf("vip 고객 %d이 %d분에 들어옵니다. 업무처리시간 = %d분\n", customer.id, customer.arrival_time, customer.service_time);
-		}
+		}*/
 		//여기까지 뜯어고쳐야될듯 뭔가 확률이 이상한것같애
 		//
 
